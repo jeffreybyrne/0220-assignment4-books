@@ -43,6 +43,14 @@ class Book:
         future_timestamp = now.timestamp() + two_weeks
         return datetime.fromtimestamp(future_timestamp)
 
+    def borrow(self):
+        if self.lent_out():
+            return False
+        else:
+            self.due_date = Book.current_due_date()
+            Book.on_shelf.remove(self)
+            Book.on_loan.append(self)
+
 
 # my_book = Book.create('book','author','isbn')
 # print(Book.on_shelf)
@@ -58,3 +66,10 @@ print(Book.browse().title) # "Sister Outsider" (this value may be different for 
 print(Book.browse().title) # "Ain't I a Woman?" (this value may be different for you)
 print(len(Book.on_shelf)) # 3
 print(len(Book.on_loan)) # 0
+print(sister_outsider.lent_out()) # False
+print(sister_outsider.borrow()) # True
+print(len(Book.on_shelf)) # 2
+print(len(Book.on_loan)) # 1
+print(sister_outsider.lent_out()) # True
+print(sister_outsider.borrow()) # False
+print(sister_outsider.due_date) # 2017-02-25 20:52:20 -0500 (this value will be different for you)
