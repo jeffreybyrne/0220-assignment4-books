@@ -34,8 +34,18 @@ class Book:
         """
         return self in Book.on_loan
 
+    @classmethod
+    def current_due_date(cls):
+        """Returns the date that books taken out today will be due
+        """
+        now = datetime.now()
+        two_weeks = 60 * 60 * 24 * 14 # two weeks expressed in seconds
+        future_timestamp = now.timestamp() + two_weeks
+        return datetime.fromtimestamp(future_timestamp)
+
 
 my_book = Book.create('book','author','isbn')
 print(Book.on_shelf)
 print(Book.browse())
 print(my_book.lent_out())
+print(Book.current_due_date())
