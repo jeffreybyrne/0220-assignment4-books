@@ -9,25 +9,36 @@ class Book:
     on_loan = []
     on_hold = []
 
-    def __init__(self,title,author,isbn):
+    def __init__(self,title,author,isbn,genre):
         self.title = title
         self.author = author
         self.isbn = isbn
+        self.genre = genre
 
     @classmethod
-    def create(cls,title,author,isbn):
+    def create(cls,title,author,isbn,genre):
         """Creates a new book instance and adds it to the list of books
         currently on the shelf
         """
-        new_book = Book(title,author,isbn)
+        new_book = Book(title,author,isbn,genre)
         Book.on_shelf.append(new_book)
         return new_book
 
     @classmethod
-    def browse(cls):
+    def browse(cls,genre='none'):
         """Returns a random book currently on the bookshelf
         """
-        return choice(Book.on_shelf)
+        if genre == 'none':
+            return choice(Book.on_shelf)
+        else:
+            books_in_genre = []
+            for num in range(0,len(Book.on_shelf)):
+                if Book.on_shelf[num].genre == genre:
+                    books_in_genre.append(Book.on_shelf[num])
+            if books_in_genre == []:
+                return False
+            else:
+                return choice(books_in_genre)
 
     def lent_out(self):
         """Checks whether or not the specified book has been lent out or not,
@@ -86,11 +97,11 @@ class Book:
 # print(Book.current_due_date())
 
 
-sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431")
-aint_i = Book.create("Ain't I a Woman?", "Bell Hooks", "9780896081307")
-if_they_come = Book.create("If They Come in the Morning", "Angela Y. Davis", "0893880221")
+sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431", "horror")
+aint_i = Book.create("Ain't I a Woman?", "Bell Hooks", "9780896081307", "horror")
+if_they_come = Book.create("If They Come in the Morning", "Angela Y. Davis", "0893880221", "comedy")
 print(Book.browse().title) # "Sister Outsider" (this value may be different for you)
-print(Book.browse().title) # "Ain't I a Woman?" (this value may be different for you)
+print(Book.browse("comedy").title) # "Ain't I a Woman?" (this value may be different for you)
 print(len(Book.on_shelf)) # 3
 print(len(Book.on_loan)) # 0
 print(sister_outsider.lent_out()) # False
