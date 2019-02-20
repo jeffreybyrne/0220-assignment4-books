@@ -82,13 +82,29 @@ class Book:
             return True
 
     @classmethod
-    def overdue(cld):
+    def overdue(cls):
         overdue_books = []
         for num in range(0,len(Book.on_loan)):
             curr_book = Book.on_loan[num]
             if curr_book.due_date < datetime.now():
                 overdue_books.append(curr_book)
         return overdue_books
+
+    @classmethod
+    def lookup(cls, search_query=""):
+        curr_book_list = []
+        if search_query == "":
+            return []
+        elif search_query != "":
+            for num in range(0,len(Book.on_shelf)):
+                curr_book = Book.on_shelf[num]
+                if curr_book.title == search_query or curr_book.author == search_query or curr_book.isbn == search_query or curr_book.genre == search_query:
+                    curr_book_list.append(curr_book)
+            return curr_book_list
+        else:
+            return []
+
+
 
 # my_book = Book.create('book','author','isbn')
 # print(Book.on_shelf)
@@ -118,7 +134,10 @@ print(len(Book.on_shelf)) # 3
 print(len(Book.on_loan)) # 0
 print(sister_outsider.renew())
 print(aint_i.renew())
+print(Book.lookup("Ain't I a Woman?"))
 print(aint_i.borrow())
 print(aint_i.renew())
 print(aint_i.borrow())
 print(aint_i.renew())
+print(Book.lookup("Ain't I a Woman?"))
+print(Book.lookup("comedy"))
