@@ -1,3 +1,4 @@
+from random import choice
 from datetime import datetime
 
 class Book:
@@ -18,4 +19,9 @@ class Book:
         Book.on_shelf.append(new_book)
         return new_book
 
+    @classmethod
+    def browse(cls):
+        return choice(Book.on_shelf)
+
 print(Book.create('book','author','isbn'))
+print(Book.browse())
