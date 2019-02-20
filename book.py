@@ -52,6 +52,13 @@ class Book:
             Book.on_loan.append(self)
             return True
 
+    def renew(self):
+        if not self.lent_out():
+            return False
+        else:
+            self.due_date = Book.current_due_date()
+            return True
+
     def return_to_library(self):
         if not self.lent_out():
             return False
@@ -96,3 +103,7 @@ print(sister_outsider.return_to_library()) # True
 print(sister_outsider.lent_out()) # False
 print(len(Book.on_shelf)) # 2
 print(len(Book.on_loan)) # 0
+print(sister_outsider.renew())
+print(aint_i.renew())
+print(aint_i.borrow())
+print(aint_i.renew())
