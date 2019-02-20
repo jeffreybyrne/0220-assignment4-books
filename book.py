@@ -50,7 +50,16 @@ class Book:
             self.due_date = Book.current_due_date()
             Book.on_shelf.remove(self)
             Book.on_loan.append(self)
+            return True
 
+    def return_to_library(self):
+        if not self.lent_out():
+            return False
+        else:
+            self.due_date = None
+            Book.on_loan.remove(self)
+            Book.on_shelf.append(self)
+            return True
 
 # my_book = Book.create('book','author','isbn')
 # print(Book.on_shelf)
