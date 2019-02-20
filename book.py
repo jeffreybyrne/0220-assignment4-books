@@ -61,6 +61,15 @@ class Book:
             Book.on_shelf.append(self)
             return True
 
+    @classmethod
+    def overdue(cld):
+        overdue_books = []
+        for num in range(0,len(Book.on_loan)):
+            curr_book = Book.on_loan[num]
+            if curr_book.due_date < datetime.now():
+                overdue_books.append(curr_book)
+        return overdue_books
+
 # my_book = Book.create('book','author','isbn')
 # print(Book.on_shelf)
 # print(Book.browse())
@@ -82,3 +91,8 @@ print(len(Book.on_loan)) # 1
 print(sister_outsider.lent_out()) # True
 print(sister_outsider.borrow()) # False
 print(sister_outsider.due_date) # 2017-02-25 20:52:20 -0500 (this value will be different for you)
+print(len(Book.overdue())) # 0
+print(sister_outsider.return_to_library()) # True
+print(sister_outsider.lent_out()) # False
+print(len(Book.on_shelf)) # 2
+print(len(Book.on_loan)) # 0
