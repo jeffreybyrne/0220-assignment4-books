@@ -7,6 +7,7 @@ class Book:
     """
     on_shelf = []
     on_loan = []
+    on_hold = []
 
     def __init__(self,title,author,isbn):
         self.title = title
@@ -45,6 +46,7 @@ class Book:
 
     def borrow(self):
         if self.lent_out():
+            Book.on_hold.append(self)
             return False
         else:
             self.due_date = Book.current_due_date()
@@ -53,7 +55,7 @@ class Book:
             return True
 
     def renew(self):
-        if not self.lent_out():
+        if not self.lent_out() or self in Book.on_hold:
             return False
         else:
             self.due_date = Book.current_due_date()
@@ -101,9 +103,11 @@ print(sister_outsider.due_date) # 2017-02-25 20:52:20 -0500 (this value will be 
 print(len(Book.overdue())) # 0
 print(sister_outsider.return_to_library()) # True
 print(sister_outsider.lent_out()) # False
-print(len(Book.on_shelf)) # 2
+print(len(Book.on_shelf)) # 3
 print(len(Book.on_loan)) # 0
 print(sister_outsider.renew())
+print(aint_i.renew())
+print(aint_i.borrow())
 print(aint_i.renew())
 print(aint_i.borrow())
 print(aint_i.renew())
