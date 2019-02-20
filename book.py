@@ -44,8 +44,17 @@ class Book:
         return datetime.fromtimestamp(future_timestamp)
 
 
-my_book = Book.create('book','author','isbn')
-print(Book.on_shelf)
-print(Book.browse())
-print(my_book.lent_out())
-print(Book.current_due_date())
+# my_book = Book.create('book','author','isbn')
+# print(Book.on_shelf)
+# print(Book.browse())
+# print(my_book.lent_out())
+# print(Book.current_due_date())
+
+
+sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431")
+aint_i = Book.create("Ain't I a Woman?", "Bell Hooks", "9780896081307")
+if_they_come = Book.create("If They Come in the Morning", "Angela Y. Davis", "0893880221")
+print(Book.browse().title) # "Sister Outsider" (this value may be different for you)
+print(Book.browse().title) # "Ain't I a Woman?" (this value may be different for you)
+print(len(Book.on_shelf)) # 3
+print(len(Book.on_loan)) # 0
